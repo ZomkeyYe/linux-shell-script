@@ -1,0 +1,9 @@
+#!/bin/bash
+#Program:
+#This program will show who are you and where are you.
+#History:
+#2019/06/03 Zomkey First release
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+echo "Your name is ==> $(whoami)."
+echo "The current directory is ==> $(pwd)."
