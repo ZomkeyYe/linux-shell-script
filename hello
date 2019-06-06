@@ -1,0 +1,9 @@
+#!#/bin/bash
+#Program:
+#This program shows ''Hello World'' in your screen.
+#History:
+#2019/05/30 Zomkey First release
+PATH=/bin:/sbin:/use/bin:/use/sbin:/use/local/bin:/use/local/sbin:~/bin
+export PATH
+echo -e ''Hello World!''
+exit 0
