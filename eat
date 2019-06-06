@@ -1,0 +1,19 @@
+#!/bin/bash
+#Program:
+#Try to tell you what to eat.
+#History:
+#2019/06/03 Zomkey First release
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+eat[1]="三餐"
+eat[2]="麻辣烫"
+eat[3]="黄焖鸡"
+eat[4]="美食城"
+eat[5]="豆腐年糕"
+eat[6]="教职工"
+eat[7]="六餐"
+eat[8]="越乡小吃"
+eat[9]="不吃"
+eatnum=9
+check=$(( ${RANDOM}*${eatnum}/32767+1))
+echo "You may eat ${eat[${check}]}"
