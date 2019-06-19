@@ -1,0 +1,28 @@
+#####通过Vim创建一个shellscript执行备份操作
+#####vim /backups/backup.sh 
+#!/bin/bash 
+
+source="/etc /home /root /var/lib /var/spool/{cron,at,mail}" 
+target="/ backups/backup-system-$(date +%Y-%m-%d).tar.gz" 
+[ ! -d /backups ] && mkdir /backups 
+tar -zcvf ${target} ${source} &> /backups /backup.log
+
+chmod a+x /backups/backup.sh ###需要给予可执行权限
+
+#####设计backup.service 的启动脚本服务
+
+#####vim /etc/systemd/system/backup.service 
+[Unit] 
+Description=backup my server 
+Requires=atd.service 
+
+[Service] 
+Type=simple 
+ExecStart=/bin/bash -c " sh /backups/backup.sh | at now" 
+
+[Install] 
+WantedBy=multi-user.target 
+
+# systemctl daemon-reload 
+# systemctl start backup.service 
+# systemctl status backup.service
