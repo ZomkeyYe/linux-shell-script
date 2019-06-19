@@ -1,5 +1,5 @@
 #####通过Vim创建一个shellscript执行备份操作
-#####vim /backups/backup.sh 
+#vim /backups/backup.sh 
 #!/bin/bash 
 
 source="/etc /home /root /var/lib /var/spool/{cron,at,mail}" 
@@ -11,7 +11,7 @@ chmod a+x /backups/backup.sh ###需要给予可执行权限
 
 #####设计backup.service 的启动脚本服务
 
-#####vim /etc/systemd/system/backup.service 
+#vim /etc/systemd/system/backup.service 
 [Unit] 
 Description=backup my server 
 Requires=atd.service 
@@ -26,3 +26,36 @@ WantedBy=multi-user.target
 # systemctl daemon-reload 
 # systemctl start backup.service 
 # systemctl status backup.service
+#####利用timer循环运作
+#vim /etc/systemd/system/backup.timer 
+[Unit] 
+Description=backup my server timer 
+
+[Timer] 
+OnBootSec=2hrs 
+OnUnitActiveSec=2days 
+
+[Install] 
+WantedBy=multi-user.target 
+
+# systemctl daemon-reload 
+# systemctl enable backup.timer 
+# systemctl restart backup.timer
+
+#####利用timer按设定固定运作
+#vim /etc/systemd/system/backup2.timer 
+[Unit] 
+Description=backup my server timer2 
+
+[Timer] 
+OnCalendar=Sun *-*-* 02:00:00 
+Persistent=true 
+Unit=backup. service 
+
+[Install] 
+WantedBy=multi-user.target
+ 
+# systemctl daemon-reload 
+# systemctl enable backup2.timer 
+# systemctl start backup2.timer 
+[root@study ~]# systemctl show backup2.timer 
